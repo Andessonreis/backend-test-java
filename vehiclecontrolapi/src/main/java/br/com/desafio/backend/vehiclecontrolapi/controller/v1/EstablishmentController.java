@@ -40,7 +40,7 @@ public class EstablishmentController {
     ObjectMapperUtil objectMapperUtil;
 
     // =========================================================== //
-    // =============== [ ENDPOINTS ] ============================= //
+    // ====================== [ ENDPOINTS ] ====================== //
     // =========================================================== //
 
     /**
@@ -57,7 +57,6 @@ public class EstablishmentController {
     /**
      * Saves an establishment.
      *
-     * @apiNote Endpoint created since version 1.0.1
      * @return A generic response entity.
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
