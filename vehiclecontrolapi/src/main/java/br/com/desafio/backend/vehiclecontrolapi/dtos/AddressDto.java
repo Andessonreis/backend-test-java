@@ -1,29 +1,42 @@
 package br.com.desafio.backend.vehiclecontrolapi.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- *
  * @author Andesson Reis
- *
- * DTO para resposta às requisições direcionadas à entidade 'Address'.
- * @param UF
- * @param city
- * @param neighborhood
- * @param street
- * @param establishment
+ * <p>
+ * DTO for responding to requests related to the 'Address' entity.
+ * 
+ * @param uf            State abbreviation
+ * @param city          City name
+ * @param neighborhood  Neighborhood name
+ * @param street        Street name
+ * @param establishment Associated establishment
  */
-public record AddressDto(
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AddressDto {
 
-    @JsonProperty(value = "UF")
-    String UF,
-    @JsonProperty(value = "city")
-    String city,
-    @JsonProperty(value = "neighborhood")
-    String neighborhood,
-    @JsonProperty(value = "street")
-    String street,
-    @JsonProperty(value = "establishment")
-    EstablishmentDto establishment
-     
-) {} 
+    Long id;
+
+    @NotBlank(message = "Value cannot be null")
+    String uf;
+
+    @NotBlank(message = "Value cannot be null")
+    String city;
+
+    @NotBlank(message = "Value cannot be null")
+    String neighborhood;
+
+    @NotBlank(message = "Value cannot be null")
+    String street;
+
+    EstablishmentDto establishment;
+
+}
