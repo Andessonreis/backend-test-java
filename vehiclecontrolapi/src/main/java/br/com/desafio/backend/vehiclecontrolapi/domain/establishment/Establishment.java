@@ -8,7 +8,7 @@ import br.com.desafio.backend.vehiclecontrolapi.domain.address.Address;
 import br.com.desafio.backend.vehiclecontrolapi.infrastructure.model.PersistenceEntity;
 
 import io.micrometer.common.lang.NonNullFields;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
@@ -67,7 +67,7 @@ public class Establishment extends PersistenceEntity implements Serializable {
      * The address of the establishment.
      *
      */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     /**
