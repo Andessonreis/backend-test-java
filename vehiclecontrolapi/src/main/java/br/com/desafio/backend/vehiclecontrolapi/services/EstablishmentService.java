@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.desafio.backend.vehiclecontrolapi.domain.establishment.Establishment;
 import br.com.desafio.backend.vehiclecontrolapi.dtos.EstablishmentDto;
 import br.com.desafio.backend.vehiclecontrolapi.infrastructure.exception.BusinessException;
+import br.com.desafio.backend.vehiclecontrolapi.infrastructure.exception.BusinessExceptionMessage;
 import br.com.desafio.backend.vehiclecontrolapi.infrastructure.util.ObjectMapperUtil;
 import br.com.desafio.backend.vehiclecontrolapi.repositories.EstablishmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -59,4 +60,38 @@ public class EstablishmentService {
                 : ResponseEntity.badRequest().build();
     }
 
+
+    /**
+     * Updates an establishment and returns its DTO representation.
+     * <p>
+     *
+     * @param establishment The establishment to be updated.
+     * @return The DTO representation of the updated establishment.
+     * @throws BusinessException If the establishment with the provided CNPJ does not exist.
+     */
+    public EstablishmentDto updateEstablishments(Establishment establishment) {
+        return Optional.of(establishment)
+                .filter(esta -> this.establishmentRepository.existsByCnpj(establishment.getCnpj()))
+                .map(esta -> objectMapperUtil.map(this.establishmentRepository.save(esta), EstablishmentDto.class))
+                .orElseThrow(
+                        () -> new BusinessException(BusinessExceptionMessage.NOT_FOUND.getMensagem())
+                );
+    }
+
+    /**
+     * Deletes an establishment from the database based on the provided ID.
+     * <p>
+     * 
+     * @param id The ID of the establishment to be deleted.
+     * @return The DTO representation of the deleted establishment.
+     * @throws BusinessException if the establishment with the given ID is not found.
+     */
+    public EstablishmentDto deleteEstablishmentId(Long id) {
+        
+        return this.establishmentRepository.findEstablishmentById(id).map(establishment -> {
+            this.establishmentRepository.delete(establishment);
+            return objectMapperUtil.map(establishment, EstablishmentDto.class);
+        })
+        .orElseThrow(() -> new BusinessException(BusinessExceptionMessage.NOT_FOUND.getMensagem()));
+    }
 }
