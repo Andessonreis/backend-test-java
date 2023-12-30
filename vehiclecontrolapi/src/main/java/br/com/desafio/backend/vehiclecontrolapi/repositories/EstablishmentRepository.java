@@ -1,5 +1,7 @@
 package br.com.desafio.backend.vehiclecontrolapi.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.desafio.backend.vehiclecontrolapi.domain.establishment.Establishment;
@@ -24,5 +26,12 @@ public interface EstablishmentRepository extends JpaRepository<Establishment, Lo
     * @return true if the establishment with the specified CNPJ exists, false otherwise.
     */
    boolean existsByCnpj(String cnpj);
-}
 
+    /**
+     * Retrieves an optional containing the establishment with the specified ID.
+     *
+     * @param id The ID of the establishment to be retrieved.
+     * @return Optional containing the establishment with the specified ID, or an empty Optional if not found.
+     */
+    Optional<Establishment> findEstablishmentById(Long id);
+}
