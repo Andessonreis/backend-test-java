@@ -2,16 +2,13 @@ package br.com.desafio.backend.vehiclecontrolapi.domain.vehicles;
 
 import java.io.Serializable;
 
-import br.com.desafio.backend.vehiclecontrolapi.dtos.VehicleDto;
 import br.com.desafio.backend.vehiclecontrolapi.infrastructure.model.PersistenceEntity;
 import io.micrometer.common.lang.NonNullFields;
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -72,5 +69,6 @@ public class Vehicle extends PersistenceEntity implements Serializable {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_type", nullable = false)
-    private VehicleType vehicleType;
+    private VehicleType type;
+
 }
