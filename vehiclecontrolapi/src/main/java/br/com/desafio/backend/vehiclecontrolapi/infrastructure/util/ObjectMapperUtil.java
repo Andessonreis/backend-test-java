@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 @Component
 public class ObjectMapperUtil {
 
@@ -25,8 +26,13 @@ public class ObjectMapperUtil {
                 .setAmbiguityIgnored(true)
                 .setMatchingStrategy(MatchingStrategies.STRICT)
                 .setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true)
+                .setCollectionsMergeEnabled(false)
+                .setDeepCopyEnabled(true)
+                .setAmbiguityIgnored(true)
+                .setFullTypeMatchingRequired(true);
 
         Output c =  MODEL_MAPPER.map(object, clazz);
 
