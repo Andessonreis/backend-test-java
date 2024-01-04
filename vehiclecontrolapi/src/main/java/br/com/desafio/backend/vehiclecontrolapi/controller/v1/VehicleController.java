@@ -52,7 +52,7 @@ public class VehicleController {
          * @return ResponseEntity with a list of vehicles or an error response in case
          *         of failure.
          */
-        @GetMapping(path = "/vehicles", produces = "application/json")
+        @GetMapping(path = "/vehicles", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> listVehicles() {
 
                 return ResponseEntity.status(HttpStatus.OK)
@@ -69,10 +69,10 @@ public class VehicleController {
          *         case of validation failure.
          */
         @CrossOrigin(origins = "*", allowedHeaders = "*")
-        @PostMapping(path = "/vehicles/vehicle", consumes = "application/json", produces = "application/json")
+        @PostMapping(path = "/vehicles/vehicle", consumes = "application/json", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> saveVehicle(@RequestBody @Valid VehicleDto vehicleDto,
                         BindingResult result) {
-
+                
                 return (result.hasErrors())
                                 ? ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                                 .body(ResultError.getResultErrors(result))
@@ -90,7 +90,7 @@ public class VehicleController {
          * @return ResponseEntity with the updated vehicle or an error response in case
          *         of validation failure.
          */
-        @PutMapping(path = "/vehicles/vehicle", consumes = "application/json", produces = "application/json")
+        @PutMapping(path = "/vehicles/vehicle", consumes = "application/json", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> updateVehicle(@Valid @RequestBody VehicleDto vehicleDto, BindingResult result) {
 
                 return (result.hasErrors())
@@ -110,7 +110,7 @@ public class VehicleController {
          *         failure.
          */
         @Transactional
-        @DeleteMapping(path = "/vehicles/vehicle/{id}", consumes = "application/json", produces = "application/json")
+        @DeleteMapping(path = "/vehicles/vehicle/{id}", consumes = "application/json", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> deleteVehicleById(@PathVariable("id") @NotNull Long id) {
 
                 return ResponseEntity.status(HttpStatus.ACCEPTED)
