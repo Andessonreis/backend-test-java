@@ -51,13 +51,11 @@ public class EstablishmentController {
      *<p>
      * @return ResponseEntity with a list of establishments or an error response in case of failure.
      */
-    @GetMapping(path = "/establishments", produces = "application/json")
+    @GetMapping(path = "/establishments", produces = { "application/json", "application/xml" })
     public ResponseEntity<?> listEstablishments() {
-
-        return ResponseEntity.status(HttpStatus.OK)
-        .body(establishmentService.listEstablishments());
+        return ResponseEntity.status(HttpStatus.OK).body(establishmentService.listEstablishments());
     }
-    
+
     /**
      * Saves an establishment.
      *<p>
@@ -66,9 +64,9 @@ public class EstablishmentController {
      * @return ResponseEntity with a generic response entity or an error response in case of validation failure.
      */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping(path = "/establishments/establishment", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/establishments/establishment", consumes = "application/json",produces = { "application/json", "application/xml" })
     public ResponseEntity<?> saveEstablishment(@RequestBody @Valid EstablishmentDto establishmentDto,
-                                                BindingResult result) {
+                                               BindingResult result) {
         return (result.hasErrors())
                 ? ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ResultError.getResultErrors(result))
@@ -77,7 +75,6 @@ public class EstablishmentController {
                         .map(establishmentDto, new Establishment())));
     }
 
-
     /**
      * Updates an establishment and returns a generic response entity.
      *<p>
@@ -85,9 +82,8 @@ public class EstablishmentController {
      * @param result BindingResult for validation.
      * @return ResponseEntity with the updated establishment or an error response in case of validation failure.
      */
-    @PutMapping(path = "/establishments/establishment", consumes = "application/json", produces = "application/json")
+    @PutMapping(path = "/establishments/establishment", consumes = "application/json", produces = { "application/json", "application/xml" })
     public ResponseEntity<?> updateEstablishment(@Valid @RequestBody EstablishmentDto establishmentDto, BindingResult result) {
-
         return (result.hasErrors())
                 ? ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ResultError.getResultErrors(result))
@@ -103,10 +99,8 @@ public class EstablishmentController {
      * @return ResponseEntity with a response entity or an error response in case of failure.
      */
     @Transactional
-    @DeleteMapping(path = "/establishments/establishment/{id}", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(path = "/establishments/establishment/{id}", consumes = "application/json", produces = { "application/json", "application/xml" })
     public ResponseEntity<?> deleteEstablishmentId(@PathVariable("id") @NotNull Long id) {
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body(establishmentService.deleteEstablishmentId(id));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(establishmentService.deleteEstablishmentId(id));
     }
 }
