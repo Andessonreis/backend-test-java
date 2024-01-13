@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
  * @param city          City name
  * @param neighborhood  Neighborhood name
  * @param street        Street name
- * @param establishment Associated establishment
  */
 @Data
 @Builder
@@ -36,7 +35,5 @@ public class AddressDto {
 
     @NotBlank(message = "Value cannot be null")
     String street;
-
-    EstablishmentDto establishment;
 
 }
