@@ -19,6 +19,7 @@ import br.com.desafio.backend.vehiclecontrolapi.domain.vehicles.Vehicle;
 import br.com.desafio.backend.vehiclecontrolapi.dtos.VehicleDto;
 import br.com.desafio.backend.vehiclecontrolapi.infrastructure.util.ObjectMapperUtil;
 import br.com.desafio.backend.vehiclecontrolapi.services.VehicleService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -52,6 +53,7 @@ public class VehicleController {
          * @return ResponseEntity with a list of vehicles or an error response in case
          *         of failure.
          */
+        @Operation(summary = "List Vehicles", description = "Retrieve a list of all vehicles.", tags = "Vehicles")
         @GetMapping(path = "/vehicles", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> listVehicles() {
 
@@ -68,6 +70,7 @@ public class VehicleController {
          * @return ResponseEntity with a generic response entity or an error response in
          *         case of validation failure.
          */
+        @Operation(summary = "Save Vehicle", description = "Save a new vehicle.", tags = "Vehicles")
         @CrossOrigin(origins = "*", allowedHeaders = "*")
         @PostMapping(path = "/vehicles/vehicle", consumes = "application/json", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> saveVehicle(@RequestBody @Valid VehicleDto vehicleDto,
@@ -90,6 +93,7 @@ public class VehicleController {
          * @return ResponseEntity with the updated vehicle or an error response in case
          *         of validation failure.
          */
+        @Operation(summary = "Update Vehicle", description = "Update an existing vehicle.", tags = "Vehicles")
         @PutMapping(path = "/vehicles/vehicle", consumes = "application/json", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> updateVehicle(@Valid @RequestBody VehicleDto vehicleDto, BindingResult result) {
 
@@ -109,6 +113,7 @@ public class VehicleController {
          * @return ResponseEntity with a response entity or an error response in case of
          *         failure.
          */
+        @Operation(summary = "Delete Vehicle", description = "Delete a vehicle by ID.", tags = "Vehicles")
         @Transactional
         @DeleteMapping(path = "/vehicles/vehicle/{id}", consumes = "application/json", produces = { "application/json", "application/xml" })
         public ResponseEntity<?> deleteVehicleById(@PathVariable("id") @NotNull Long id) {
