@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.desafio.backend.vehiclecontrolapi.domain.establishment.Establishment;
@@ -49,15 +48,17 @@ public class EstablishmentService {
      * <p>
      * 
      * @param establishment The establishment to be saved.
-     * @return ResponseEntity with the saved establishment data in the form of a DTO.
-     *     
+     * @return EstablishmentDto representing the saved establishment.
+     * @throws BusinessException if the CNPJ already exists in the database.
      */
-    public ResponseEntity<Establishment> saveEstablishment(Establishment establishment) {
-        // TODO: revisar logica.
+    public EstablishmentDto saveEstablishment(Establishment establishment) {
 
-        return establishmentRepository.findById(establishmentRepository.save(establishment).getId()).isPresent()
-                ? ResponseEntity.status(201).build()
-                : ResponseEntity.badRequest().build();
+        return Optional.of(establishment)
+                .filter(esta -> !this.establishmentRepository.existsByCnpj(esta.getCnpj()))
+                .map(esta -> objectMapperUtil.map(this.establishmentRepository.save(esta), EstablishmentDto.class))
+                .orElseThrow(() -> new BusinessException(
+                        BusinessExceptionMessage.ATTRIBUTE_VALUE_ALREADY_EXISTS.getMensagemValorJaExiste("CNPJ"))
+                );
     }
 
 
@@ -70,6 +71,7 @@ public class EstablishmentService {
      * @throws BusinessException If the establishment with the provided CNPJ does not exist.
      */
     public EstablishmentDto updateEstablishments(Establishment establishment) {
+          
         return Optional.of(establishment)
                 .filter(esta -> this.establishmentRepository.existsByCnpj(establishment.getCnpj()))
                 .map(esta -> objectMapperUtil.map(this.establishmentRepository.save(esta), EstablishmentDto.class))
